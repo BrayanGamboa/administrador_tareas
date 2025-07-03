@@ -14,9 +14,9 @@ const descError = document.getElementById('desc-error');
 // Limpiar caracteres peligrosos para evitar inyecciones
 function limpiarEntrada(texto) {
     return texto
-        .replace(/['";\\]/g, '') 
-        .replace(/--/g, '')      
-        .replace(/</g, '&lt;')   
+        .replace(/['";\\]/g, '')
+        .replace(/--/g, '')
+        .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;');
 }
 
@@ -51,25 +51,29 @@ function validarFormulario() {
         idError.textContent = "El ID ya existe.";
         idError.classList.remove('d-none');
         valido = false;
+    } else if (idValidado.length < 3) {
+        idError.textContent = "Mínimo 3 caracteres.";
+        idError.classList.remove('d-none');
+        valido = false;
     }
 
-    
+
     if (!tituloValidado) {
         tituloError.textContent = "El título es obligatorio.";
         tituloError.classList.remove('d-none');
         valido = false;
-    } 
+    }
     else if (tituloValidado.length > 40) {
         tituloError.textContent = "Máximo 40 caracteres.";
         tituloError.classList.remove('d-none');
         valido = false;
+    } else if (tituloValidado.length < 3) {
+        tituloError.textContent = "Mínimo 3 caracteres.";
+        tituloError.classList.remove('d-none');
+        valido = false;
     }
 
-    if (!descValidado) {
-        descError.textContent = "La descripción es obligatoria.";
-        descError.classList.remove('d-none');
-        valido = false;
-    } else if (descValidado.length > 120) {
+    if (descValidado.length > 120) {
         descError.textContent = "Máximo 120 caracteres.";
         descError.classList.remove('d-none');
         valido = false;
@@ -100,7 +104,7 @@ function renderTareas() {
     });
 }
 
-formulario.addEventListener('submit', function(e) {
+formulario.addEventListener('submit', function (e) {
     e.preventDefault();
     if (!validarFormulario()) return;
 
@@ -116,7 +120,7 @@ formulario.addEventListener('submit', function(e) {
     renderTareas();
 });
 
-document.getElementById('btn-eliminar').addEventListener('click', function() {
+document.getElementById('btn-eliminar').addEventListener('click', function () {
     const id = limpiarEntrada(idInput.value.trim());
     if (!id) {
         Swal.fire({
@@ -141,7 +145,7 @@ document.getElementById('btn-eliminar').addEventListener('click', function() {
     renderTareas();
 });
 
-document.getElementById('btn-completar').addEventListener('click', function() {
+document.getElementById('btn-completar').addEventListener('click', function () {
     const id = limpiarEntrada(idInput.value.trim());
     if (!id) {
         Swal.fire({
